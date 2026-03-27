@@ -1,15 +1,22 @@
 package service;
 
-import model.FileItem;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import model.FileItem;
+
+// Scans a directory and returns a list of FileItem objects.
+// Uses recursive traversal (Files.walk) to include subfolders.
 
 public class FileMover {
 
-    public void moveFile(FileItem file, Path destinationFolder) throws IOException {
+    private final AppLogger logger;
 
+    public FileMover(AppLogger logger) {
+        this.logger = logger;
+    }
+
+    public void moveFile(FileItem file, Path destinationFolder) throws IOException {
         if (!Files.exists(destinationFolder)) {
             Files.createDirectories(destinationFolder);
         }
@@ -20,6 +27,7 @@ public class FileMover {
         Files.move(file.getPath(), safeTargetPath);
 
         System.out.println("Moved: " + file.getFileName() + " -> " + safeTargetPath);
+        logger.logMove(file.getPath(), safeTargetPath);
     }
 
     private Path getSafeTargetPath(Path targetPath) {

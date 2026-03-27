@@ -1,10 +1,11 @@
 package service;
 
 import java.nio.file.Path;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import model.FileItem;
 import model.Rule;
 
@@ -38,6 +39,15 @@ public class RuleEngine {
         boolean keywordMatches = rule.getKeyword() == null ||
                 file.getFileName().toLowerCase().contains(rule.getKeyword());
 
-        return extensionMatches && keywordMatches;
+        boolean ageMatches = rule.getOlderThanDays() == null ||
+                isOlderThan(file, rule.getOlderThanDays());
+
+        return extensionMatches && keywordMatches && ageMatches;
+    }
+
+    private boolean isOlderThan(FileItem file, int days) {
+        Instant cutoff = Instant.now().minus(days, ChronoUnit.DAYS);
+        Instant fileModified = file.getLastModifiedTime().toInstant();
+        return fileModified.isBefore(cutoff);
     }
 }
