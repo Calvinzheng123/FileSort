@@ -3,25 +3,6 @@ package model;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 
-/*
-Represents a single file discovered during scanning.
-
-This is an immutable data object that stores all metadata needed for
-classification and movement:
-- full file path
-- file name
-- extension
-- file size
-- last modified time
-
-FileItem acts as the core unit passed between components:
-Scanner → RuleEngine → FileMover
-
-notes:
-- Immutable (all fields final) to prevent accidental mutation
-- Contains only data, no logic (separation of concerns)
-*/
-
 public class FileItem {
 
     private final Path path;

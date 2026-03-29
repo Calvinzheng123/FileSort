@@ -5,9 +5,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import model.FileItem;
 
-// Scans a directory and returns a list of FileItem objects.
-// Uses recursive traversal (Files.walk) to include subfolders.
+/*
+Handles all file movement operations on the filesystem.
 
+Responsibilities:
+- move files to destination folders
+- create destination directories if they do not exist
+- prevent overwriting by handling duplicate filenames
+- log all successful file moves
+
+Duplicate handling:
+- automatically renames files if conflicts occur
+  (e.g., file.jpg → file(1).jpg)
+
+design:
+- isolates all filesystem modifications in one class
+- ensures safe, controlled file operations
+- integrates with AppLogger for traceability and rollback support
+*/
 public class FileMover {
 
     private final AppLogger logger;

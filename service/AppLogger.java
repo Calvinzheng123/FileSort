@@ -7,6 +7,26 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/*
+Handles logging of all file operations performed by the application.
+
+Logs are written to a file and used for:
+- tracking file movements
+- debugging issues
+- enabling rollback functionality
+
+Supported log types:
+- MOVED: successful file move
+- SKIPPED: file ignored or not processed
+- ERROR: failure during file operation
+- ROLLED_BACK: file restored during rollback
+
+design:
+- appends logs instead of overwriting
+- ensures log directory exists before writing
+- provides structured output for parsing during rollback
+*/
+
 public class AppLogger {
 
     private final Path logFilePath;

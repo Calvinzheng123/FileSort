@@ -9,6 +9,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*
+Handles undoing file movements using data from the log file.
+
+This class reads previously logged MOVE operations and reverses them,
+restoring files to their original locations.
+
+Key behavior:
+- parses log entries to reconstruct move operations
+- processes rollback in reverse order (last-in-first-out)
+- safely handles missing files and conflicts
+
+Safety features:
+- skips files that no longer exist
+- avoids overwriting existing files
+- recreates original directories if needed
+
+design:
+- depends on AppLogger output format
+- enables recovery from incorrect file organization runs
+*/
+
 public class RollbackService {
 
     private final AppLogger logger;

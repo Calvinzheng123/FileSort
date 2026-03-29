@@ -5,27 +5,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-Defines a rule used to classify files.
+This defines a rule used to classify files and determine their destination folder.
 
-A rule can match files based on:
-- file extensions (e.g. jpg, png)
-- keyword in filename (e.g. "resume", "screenshot")
-- file age (older than X days)
+A rule can match files based on three optional conditions:
+- file extension(s)
+- keyword in filename
+- file age (older than a specified number of days)
 
-Each rule maps matching files to a destination folder.
+If a condition is null, it is ignored.
 
-Important behavior:
-- Any field can be null, meaning "no restriction" for that condition
-- Rules are evaluated in order (priority matters)
+Each rule maps matching files to a destination directory.
 
-Examples:
-- Match all files containing "resume"
-- Match image files with "screenshot" in the name
-- Match files older than 2 years
-
-Design notes:
-- Flexible rule definition supports combining conditions
-- Enables extensible rule system without hardcoding logic
+design:
+- flexible rule structure which allows combining multiple conditions
+- supports priority-based evaluation (order matters in RuleEngine)
+- enables external configuration via config file
 */
 
 public class Rule {

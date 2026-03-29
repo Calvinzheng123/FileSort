@@ -15,13 +15,16 @@ FileSort scans directories (including nested folders) and organizes files based 
 - Supports grouping by file type (images, documents, spreadsheets, etc.)  
 - Extensible architecture for adding new rules  
 - Safe handling of unmatched files (files remain in place if no rule applies)  
+- Duplicate-safe file movement (automatic renaming)  
+- Logging of file operations for traceability  
+- Rollback support to undo previous file movements  
 
 ---
 
 ## Current Rules
 - Images → `png`, `jpg`, `jpeg`  
 - Spreadsheets → `csv`, `xlsx`  
-- Documents → `pdf`  
+- Resumes → `pdf`, `docx`, contains resume in filename
 
 ---
 
@@ -30,6 +33,7 @@ The project is actively being expanded by adding new rules and improving flexibi
 - Filename-based classification (e.g., detecting "resume", "invoice")  
 - Enhanced duplicate handling  
 - More dynamic and configurable rule definitions  
+- Improved CLI controls (e.g., dry-run mode, configurable limits)  
 
 ---
 

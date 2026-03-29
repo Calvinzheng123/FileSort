@@ -9,19 +9,20 @@ import java.util.List;
 import model.FileItem;
 
 /*
-Responsible for scanning directories and converting real files into FileItem objects.
+Responsible for scanning a directory and converting files into FileItem objects.
 
-Key behavior:
-- Recursively traverses the directory tree using Files.walk()
-- Filters out directories (only processes regular files)
-- Extracts file metadata (name, extension, size, last modified time)
+This class interacts directly with the filesystem and extracts metadata for each file.
+In its current configuration, it scans only the top-level directory to avoid
+modifying files inside nested folders (e.g., project directories).
 
-Output:
-- Returns a list of FileItem objects representing all discovered files
+Key responsibilities:
+- iterate through files in a directory
+- extract file metadata (name, extension, size, last modified time)
+- return a list of FileItem objects for further processing
 
-notes:
-- Acts as the bridge between filesystem and application logic
-- Keeps scanning logic separate from classification and movement
+design:
+- separates filesystem access from business logic
+- ensures safe operation by ignoring directories
 */
 
 public class FileScanner {
@@ -29,7 +30,7 @@ public class FileScanner {
     public List<FileItem> scanFolder(Path folderPath) throws IOException {
         List<FileItem> files = new ArrayList<>();
 
-        try (var stream = Files.walk(folderPath)) {
+        try (var stream = Files.list(folderPath)) {
             for (Path path : stream.toList()) {
                 if (Files.isRegularFile(path)) {
                     String fileName = path.getFileName().toString();

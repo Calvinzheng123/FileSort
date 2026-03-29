@@ -9,6 +9,23 @@ import java.util.Map;
 import model.FileItem;
 import model.Rule;
 
+/*
+Core decision engine that determines where each file should be moved.
+
+This class evaluates files against a list of rules and assigns each file
+to a destination folder based on the first matching rule.
+
+Key behavior:
+- applies "first match wins" logic (rule order defines priority)
+- checks extension, keyword, and age conditions
+- returns a mapping of FileItem to destination path
+
+design:
+- centralizes classification logic in one place
+- keeps rule evaluation independent from scanning and file movement
+- simple and extensible matching system
+*/
+
 public class RuleEngine {
 
     public Map<FileItem, Path> generatePreview(List<FileItem> files, List<Rule> rules) {
